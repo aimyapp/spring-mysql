@@ -1,0 +1,21 @@
+version: '2'
+services:
+  dbserver:
+    build: ./docker/mysql
+    image: demo-db:0.0.1
+    restart: always
+    environment:
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+    - "3314:3306"
+    volumes:
+    - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+    - ./docker/mysql/conf.d:/etc/mysql/conf.d
+    - ./log/mysql:/var/log/mysql
+
+volumes:
+  mysql-db:
+    driver: local
